@@ -1,0 +1,54 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/api/api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/api/api.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/api/api.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publishonline",
+      "command": "${env:ProgramFiles}\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe",
+      "type": "process",
+      "args": [
+        "-verb:sync",
+        "-source:contentPath='${workspaceFolder}\\api\\bin\\Release\\net7.0\\publish'",
+        "-dest:contentPath='win5210.site4now.net',computerName=https://win5210.site4now.net:8172/msdeploy.axd?site=makkimadani-002-subsite5, AuthType='Basic',userName='makkimadani-002',password=''",
+        "-enableRule:AppOffline"
+      ],
+      "problemMatcher": "$msCompile",
+      "dependsOn": ["publish"]
+    }
+  ]
+}
