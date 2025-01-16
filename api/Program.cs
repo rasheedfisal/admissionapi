@@ -1,6 +1,7 @@
 using admissionapi.api.Installers;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.FileProviders;
+ using BoldReports.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,16 +9,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.InstallServicesInAssembly();
 
+builder.Services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
+{
+    builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+}));
+builder.Services.AddMemoryCache();
+
 var app = builder.Build();
 
+
+ReportConfig.DefaultSettings = new ReportSettings().RegisterExtensions(new List<string> { "BoldReports.Data.WebData", "BoldReports.Data.Csv" });
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
 
     const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

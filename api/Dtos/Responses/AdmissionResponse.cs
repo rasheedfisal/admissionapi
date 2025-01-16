@@ -8,6 +8,8 @@ public class AdmissionResponse
 {
     [Required]
     public Guid adm_id { get; set; }
+    public string? admIndex { get; set; }
+    public DateTime AdmDate { get; set; }
     public bool gphone_isFound { get; set; }
     public string gphone_num { get; set; } = string.Empty;
     [Required]
@@ -15,6 +17,8 @@ public class AdmissionResponse
     [Required]
     public Guid g_id { get; set; }
     [Required]
+
+    public string? g_fullname { get; set; }
     public string g_firstName { get; set; } = string.Empty;
 
     [Required]
@@ -60,6 +64,8 @@ public class AdmissionResponse
 
     [Required]
     public Guid f_id { get; set; }
+
+    public string? f_fullname { get; set; }
 
     [Required]
     public string f_firstName { get; set; } = string.Empty;

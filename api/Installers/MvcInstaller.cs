@@ -20,7 +20,7 @@ public class MvcInstaller : IInstaller
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen();
+            // builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<IImageProcessor, ImageProcessor>();
         }

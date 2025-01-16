@@ -85,7 +85,7 @@ namespace MotorX.Api.Services
                         dbPath = Path.Combine(folderName, uniqueFileName);
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
-                            file.CopyTo(stream);
+                            await file.CopyToAsync(stream);
                         }
                     }
                     return dbPath;

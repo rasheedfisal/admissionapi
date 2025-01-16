@@ -294,16 +294,16 @@ public class AdmissionController : BaseController
 
             if (result is null) return NotFound("Item Not Found");
 
-
-            await _unitOfWork.CompleteAsync();
-
             return Ok(new AdmissionResponse
             {
              adm_id = result.Id,
+             admIndex = result.AdmissionIndex,
+             AdmDate =  result.AddedDate,
              gphone_isFound = true,
              gphone_num = result.Gardian.PhoneOne,
              g_id = result.Gardian.Id,
              g_title = result.Gardian.Title, 
+             g_fullname = $"{result.Gardian.FirstName} {result.Gardian.SecondName} {result.Gardian.MiddleName} {result.Gardian.Surname}",
              g_firstName = result.Gardian.FirstName,
              g_secondName = result.Gardian.SecondName,
              g_middleName = result.Gardian.MiddleName,
@@ -320,6 +320,7 @@ public class AdmissionController : BaseController
              mr_id = result.Martial.Id,
              mr_status = result.Martial.MRStatus,
              f_id = result.Father.Id,
+             f_fullname = $"{result.Father.FirstName} {result.Father.SecondName} {result.Father.MiddleName} {result.Father.Surname}",
              f_firstName = result.Father.FirstName, 
              f_secondName = result.Father.SecondName, 
              f_middleName = result.Father.MiddleName, 
@@ -330,6 +331,7 @@ public class AdmissionController : BaseController
              f_address = result.Father.Address, 
              m_id = result.Mother.Id, 
              m_fullname = result.Mother.FullName, 
+             m_email = result.Mother.Email,
              m_phone1 = result.Mother.PhoneOne, 
              m_phone2 = result.Mother.PhoneTwo, 
              m_address = result.Mother.Address,
@@ -359,6 +361,27 @@ public class AdmissionController : BaseController
                 }
             });
         }
-        
+    }
+    [HttpDelete]
+    [Route("DeleteStd")]
+    public async Task<IActionResult> DeleteStd([FromQuery] Guid stdid)
+    {
+        try
+        {
+            await _unitOfWork.Student.DeleteAsync(stdid);
+            await _unitOfWork.CompleteAsync();
+            return NoContent();
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(new ErrorsDto
+            {
+                Success = false,
+                Errors = new List<string>()
+                {
+                    ex.Message
+                }
+            });
+        }
     }
 }

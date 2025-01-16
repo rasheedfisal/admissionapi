@@ -1,5 +1,5 @@
-﻿namespace admissionapi.api.Dtos.Responses
-{
+﻿namespace admissionapi.api.Dtos.Responses;
+
     public class PagedResponse<T>
     {
         public PagedResponse()
@@ -23,4 +23,4 @@
         public Uri NextPage { get; set; }
         public Uri PreviousPage { get; set; }
     }
-}
+

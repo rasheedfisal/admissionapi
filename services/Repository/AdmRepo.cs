@@ -53,7 +53,7 @@ public class AdmRepository : GenericRepository<Admission>, IAdmRepository
                     .Include(x => x.Martial)
                     .Include(x => x.Father)
                     .Include(x => x.Mother)
-                    .Include(x => x.Students)
+                    .Include(x => x.Students.Where(e => e.IsDeleted == false))
                     .OrderByDescending(x => x.AddedDate)
                     .AsNoTracking()
                     .SingleOrDefaultAsync();
